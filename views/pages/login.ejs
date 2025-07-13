@@ -1,0 +1,80 @@
+<%- include('../partials/header') %>
+<section class="min-h-screen bg-gradient-to-br from-[#2e044e] via-[#1c1c2c] to-[#5c2254] flex items-center justify-center py-16 px-2">
+  <form 
+    method="POST" 
+    action="/auth/login"
+    class="relative bg-white/10 backdrop-blur-2xl border border-purple-800/30 p-10 rounded-3xl shadow-2xl max-w-md w-full animate-glass-in"
+    autocomplete="off"
+  >
+    <!-- Ornamen floating gradient -->
+    <span class="absolute -top-12 -right-16 w-36 h-36 bg-gradient-to-tr from-pink-400/60 via-purple-700/50 to-indigo-600/40 rounded-full blur-2xl z-0"></span>
+    <span class="absolute -bottom-16 -left-16 w-28 h-28 bg-gradient-to-tr from-indigo-400/60 via-purple-500/50 to-pink-600/30 rounded-full blur-2xl z-0"></span>
+
+    <div class="flex flex-col items-center gap-2 mb-6 relative z-10">
+      <span class="bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-400 p-4 rounded-full shadow-lg mb-1 animate-pulse">
+        <i class="fa fa-user-lock text-white text-3xl drop-shadow-lg"></i>
+      </span>
+      <h2 class="text-3xl font-extrabold text-center text-purple-100 drop-shadow tracking-wider mb-1">
+        Login Portfolio Gallery
+      </h2>
+      <p class="text-purple-200/70 text-center text-base font-medium mb-3">
+        Masuk untuk kelola &amp; bagikan portofolio kreatifmu!
+      </p>
+    </div>
+    
+    <% if (typeof error_msg !== 'undefined' && error_msg) { %>
+      <div class="bg-red-400/20 border border-red-500/60 text-red-200 px-4 py-2 mb-5 rounded text-center shadow animate-pulse">
+        <%= error_msg %>
+      </div>
+    <% } %>
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="bg-red-400/20 border border-red-500/60 text-red-200 px-4 py-2 mb-5 rounded text-center shadow animate-pulse">
+        <%= error %>
+      </div>
+    <% } %>
+    <% if (typeof success_msg !== 'undefined' && success_msg) { %>
+      <div class="bg-green-400/20 border border-green-500/60 text-green-200 px-4 py-2 mb-5 rounded text-center shadow animate-bounce">
+        <%= success_msg %>
+      </div>
+    <% } %>
+
+    <div class="mb-7 relative z-10">
+      <label for="email" class="block font-semibold text-purple-200 mb-1">Email</label>
+      <input 
+        type="email" name="email" id="email" required
+        class="w-full border border-purple-800/40 bg-[#181824]/70 text-white rounded-xl px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-pink-400 shadow transition"
+        placeholder="you@email.com"
+        autocomplete="off"
+      >
+    </div>
+    <div class="mb-10 relative z-10">
+      <label for="password" class="block font-semibold text-purple-200 mb-1">Password</label>
+      <input 
+        type="password" name="password" id="password" required minlength="6"
+        class="w-full border border-purple-800/40 bg-[#181824]/70 text-white rounded-xl px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-purple-400 shadow transition"
+        placeholder="Masukkan password"
+        autocomplete="off"
+      >
+    </div>
+    <button
+      type="submit"
+      class="w-full bg-gradient-to-r from-purple-700 to-pink-600 text-white font-bold px-6 py-3 rounded-2xl shadow-xl hover:from-pink-600 hover:to-purple-700 hover:scale-105 transition-all duration-200 uppercase tracking-wide text-lg"
+    >
+      <i class="fa fa-sign-in-alt mr-2"></i> Login
+    </button>
+
+    <p class="mt-9 text-center text-base text-purple-200/70">
+      Belum punya akun?
+      <a href="/auth/register" class="text-pink-400 font-bold hover:underline hover:text-purple-300 transition">
+        Daftar di sini
+      </a>
+    </p>
+  </form>
+</section>
+
+<style>
+@keyframes glass-in { from{opacity:0;transform:translateY(60px) scale(.97);} to{opacity:1;transform:translateY(0) scale(1);} }
+.animate-glass-in { animation: glass-in 0.7s cubic-bezier(.53,1.38,.38,.99); }
+</style>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Portfolio Gallery</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- TailwindCSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Font Awesome CDN (for icons, optional) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- Custom Style -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="min-h-screen flex flex-col bg-[#101014] text-white">
+
+  <!-- NAVBAR DARK MODERN -->
+  <nav class="navbar-dark">
+    <span class="logo flex items-center gap-2 font-bold text-2xl tracking-widest uppercase">
+      <i class="fa fa-gem text-pink-500 text-xl"></i> Portfolio Gallery
+    </span>
+    <div class="nav-menu">
+      <a href="/" class="<%= (typeof page !== 'undefined' && page === 'home') ? 'active' : '' %>">Home</a>
+      <!-- Hapus About jika tidak ingin tampil, atau bisa komentar -->
+      <!-- <a href="/about" class="<%= (typeof page !== 'undefined' && page === 'about') ? 'active' : '' %>">About</a> -->
+      <% if (!user) { %>
+        <a href="/auth/login" class="<%= (typeof page !== 'undefined' && page === 'login') ? 'active' : '' %>">Login</a>
+        <a href="/auth/register" class="<%= (typeof page !== 'undefined' && page === 'register') ? 'active' : '' %>">Register</a>
+      <% } else { %>
+        <a href="/dashboard" class="<%= (typeof page !== 'undefined' && page === 'dashboard') ? 'active' : '' %>">Dashboard</a>
+        <a href="/profile" class="<%= (typeof page !== 'undefined' && page === 'profile') ? 'active' : '' %>">Profil</a>
+        <form action="/auth/logout" method="get" class="inline">
+          <button type="submit" class="hover:bg-[#22223a] text-red-500 font-semibold px-3 py-1 rounded transition">Logout</button>
+        </form>
+        <div class="ml-2 flex items-center gap-2">
+          <img src="<%= user.avatar || '/uploads/default-avatar.png' %>" class="w-8 h-8 rounded-full border-2 border-purple-700 shadow object-cover" alt="User Avatar">
+          <span class="hidden sm:inline text-purple-300 font-bold text-base"><%= user.name %></span>
+        </div>
+      <% } %>
+    </div>
+  </nav>

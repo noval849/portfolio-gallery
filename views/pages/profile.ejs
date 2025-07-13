@@ -1,0 +1,24 @@
+<%- include('../partials/header') %>
+<section class="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 py-14 px-3">
+  <div class="max-w-lg w-full bg-white/10 backdrop-blur-2xl rounded-3xl shadow-2xl border border-purple-900/30 p-10 flex flex-col items-center animate-glass-in">
+    <div class="relative mb-7">
+      <img src="<%= user.avatar || '/uploads/default-avatar.png' %>" alt="Avatar" class="w-32 h-32 rounded-full border-4 border-purple-400 shadow-xl bg-white object-cover">
+      <span class="absolute bottom-2 right-2 bg-pink-600 border-2 border-white rounded-full w-7 h-7 flex items-center justify-center text-white shadow">
+        <i class="fa fa-user"></i>
+      </span>
+    </div>
+    <h1 class="text-3xl font-extrabold text-purple-100 mb-2 tracking-wide drop-shadow-lg"><%= user.name %></h1>
+    <div class="text-purple-200 text-lg mb-4 font-semibold"><i class="fa fa-envelope mr-2"></i> <%= user.email %></div>
+    <div class="mb-7 text-base text-purple-300/80">
+      Bergabung: <%= user.createdAt ? user.createdAt.toLocaleDateString('id-ID') : '-' %>
+    </div>
+    <a href="/dashboard" class="mt-3 bg-gradient-to-r from-purple-700 to-pink-600 text-white font-bold px-7 py-3 rounded-xl shadow-lg hover:from-pink-600 hover:to-purple-700 hover:scale-105 transition-all duration-150 uppercase tracking-wide text-base">
+      Kembali ke Dashboard
+    </a>
+  </div>
+</section>
+<style>
+@keyframes glass-in { from{opacity:0;transform:translateY(40px) scale(.97);} to{opacity:1;transform:translateY(0) scale(1);} }
+.animate-glass-in { animation: glass-in 0.7s cubic-bezier(.53,1.38,.38,.99); }
+</style>
+<%- include('../partials/footer') %>

@@ -1,0 +1,87 @@
+<%- include('../partials/header') %>
+<section class="min-h-screen bg-[#101014] py-14 px-2 flex items-center justify-center">
+  <div class="relative max-w-3xl w-full mx-auto bg-white/10 backdrop-blur-2xl rounded-3xl shadow-2xl border border-purple-900/30 overflow-hidden animate-glass-in">
+    <!-- Gradient Bubble Decoration -->
+    <span class="absolute -top-16 -right-16 w-56 h-56 bg-gradient-to-tr from-pink-500/40 via-purple-700/40 to-indigo-500/30 rounded-full blur-3xl z-0"></span>
+    <span class="absolute -bottom-20 -left-16 w-36 h-36 bg-gradient-to-br from-indigo-500/30 via-purple-500/30 to-pink-400/40 rounded-full blur-2xl z-0"></span>
+
+    <div class="flex flex-col md:flex-row relative z-10">
+      <!-- Image Section -->
+      <div class="md:w-2/5 bg-gradient-to-br from-purple-900/60 via-purple-700/30 to-indigo-700/40 flex items-center justify-center p-6 md:p-8">
+        <img src="<%= portfolio.imageUrl %>" alt="<%= portfolio.title %>" class="rounded-2xl shadow-2xl w-full object-contain max-h-80 bg-white/40 border-2 border-purple-300/60 animate-fade-in">
+      </div>
+      <!-- Detail Section -->
+      <div class="md:w-3/5 p-6 md:p-10 flex flex-col justify-between">
+        <div>
+          <h1 class="text-3xl md:text-4xl font-extrabold text-purple-100 mb-4 drop-shadow-lg tracking-wider flex items-center gap-2">
+            <i class="fa fa-gem text-pink-400"></i> <%= portfolio.title %>
+          </h1>
+          <div class="flex items-center gap-2 mb-4 flex-wrap">
+            <span class="portfolio-category"><%= portfolio.category %></span>
+            <% portfolio.tags.forEach(tag => { %>
+              <span class="bg-pink-400/20 text-pink-200 px-3 py-1 text-xs rounded-md font-semibold">#<%= tag %></span>
+            <% }) %>
+          </div>
+          <p class="text-lg text-purple-100/90 mb-4"><%= portfolio.description %></p>
+          <div class="flex items-center gap-3 mt-5 mb-2">
+            <img src="<%= portfolio.userId.avatar || '/uploads/default-avatar.png' %>" alt="User" class="w-11 h-11 rounded-full border-2 border-purple-300 object-cover shadow-lg">
+            <span class="text-base text-purple-200 font-bold"><%= portfolio.userId.name %></span>
+          </div>
+        </div>
+        <div class="flex items-center gap-6 mt-7">
+          <span class="bg-white/10 border border-pink-200/30 text-pink-300 px-5 py-2 rounded-full text-sm font-bold flex items-center gap-2 shadow select-none">
+            <i class="fa fa-heart"></i> <%= portfolio.likes || 0 %> Likes
+          </span>
+          <span class="text-gray-400 text-sm">Dibuat: <%= portfolio.createdAt.toLocaleDateString('id-ID', {year: 'numeric', month: 'short', day: 'numeric'}) %></span>
+        </div>
+      </div>
+    </div>
+    <!-- Comment Section -->
+    <div class="bg-purple-50/80 p-8 md:p-10 border-t border-purple-200/30 relative z-10">
+      <h2 class="text-2xl font-bold text-purple-800 mb-4">Komentar (<%= portfolio.comments.length %>)</h2>
+      <% if (user) { %>
+        <form method="POST" action="/portfolio/comment/<%= portfolio._id %>" class="mb-7 flex gap-3">
+          <input name="comment" required maxlength="300"
+            class="flex-1 border border-purple-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-400 text-base bg-white/70 shadow"
+            placeholder="Tulis komentar kamu di sini... (max 300 karakter)">
+          <button type="submit"
+            class="bg-gradient-to-r from-purple-700 to-pink-600 text-white font-bold px-7 py-3 rounded-xl shadow-lg hover:from-pink-600 hover:to-purple-700 hover:scale-105 transition-all duration-150 uppercase tracking-wide text-base">
+            Kirim
+          </button>
+        </form>
+      <% } else { %>
+        <div class="mb-7 text-center text-sm text-gray-600">
+          <a href="/auth/login" class="text-pink-700 hover:underline font-semibold">Login</a> untuk menulis komentar.
+        </div>
+      <% } %>
+      <% if (portfolio.comments.length === 0) { %>
+        <div class="text-gray-400 text-center italic py-4">Belum ada komentar.</div>
+      <% } else { %>
+        <div class="space-y-5">
+          <% portfolio.comments.slice().reverse().forEach(comment => { %>
+            <div class="flex items-start gap-4 bg-white/80 rounded-xl p-4 shadow-lg border-l-4 border-purple-200">
+              <img src="/uploads/default-avatar.png" alt="Avatar" class="w-10 h-10 rounded-full object-cover border-2 border-purple-300/60 mt-1 shadow">
+              <div>
+                <div class="font-bold text-purple-700 mb-1 flex items-center gap-1"><%= comment.name %></div>
+                <div class="text-gray-700 text-base mb-1"><%= comment.comment %></div>
+                <div class="text-xs text-gray-400"><%= new Date(comment.createdAt).toLocaleString('id-ID', {dateStyle:'medium', timeStyle:'short'}) %></div>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      <% } %>
+    </div>
+    <!-- Back Button -->
+    <a href="/" class="absolute top-6 left-8 bg-white/90 text-purple-700 px-5 py-2 rounded-full shadow hover:bg-white transition text-base font-bold z-10 flex items-center gap-2 border border-purple-200/80">
+      <i class="fa fa-arrow-left"></i> Kembali ke Gallery
+    </a>
+  </div>
+</section>
+
+<style>
+@keyframes glass-in { from{opacity:0;transform:translateY(40px) scale(.97);} to{opacity:1;transform:translateY(0) scale(1);} }
+.animate-glass-in { animation: glass-in 0.9s cubic-bezier(.53,1.38,.38,.99); }
+@keyframes fade-in { from{opacity:0;} to{opacity:1;} }
+.animate-fade-in { animation: fade-in 1.3s cubic-bezier(.7,.1,.7,.99); }
+</style>
+<%- include('../partials/footer') %>

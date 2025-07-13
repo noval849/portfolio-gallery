@@ -1,0 +1,33 @@
+<%- include('../partials/header') %>
+<section class="min-h-[70vh] flex items-center justify-center bg-[#101014] py-14 px-3">
+  <div class="backdrop-blur-lg bg-white/10 rounded-3xl shadow-2xl p-10 max-w-2xl w-full text-center border border-purple-900/30 relative overflow-hidden">
+
+    <!-- Floating gem icon & gradient background -->
+    <div class="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
+      <div class="absolute left-[-60px] top-[-60px] w-60 h-60 bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500 opacity-30 rounded-full blur-2xl"></div>
+      <div class="absolute right-[-40px] bottom-[-40px] w-44 h-44 bg-gradient-to-tl from-indigo-400 via-purple-600 to-pink-400 opacity-25 rounded-full blur-2xl"></div>
+    </div>
+    <div class="relative z-10">
+      <span class="inline-flex items-center justify-center mb-3">
+        <span class="bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-400 p-4 rounded-full shadow-lg">
+          <i class="fa fa-gem text-white text-3xl drop-shadow-lg"></i>
+        </span>
+      </span>
+      <h1 class="text-4xl font-extrabold text-purple-100 mb-3 drop-shadow-md tracking-wide">Tentang Portfolio Gallery</h1>
+      <p class="text-lg text-purple-100/80 mb-7 font-medium">
+        <span class="bg-white/10 px-2 py-1 rounded-lg">
+        Portfolio Gallery adalah aplikasi web modern untuk menampilkan, berbagi, dan mengelola karya portofolio kreatif secara online.<br>
+        Kamu bisa membuat akun, upload karya, melihat karya orang lain, dan membangun branding digitalmu!
+        </span>
+      </p>
+      <div class="mt-7 text-base text-purple-200 font-medium">
+        Dibuat untuk tugas <span class="font-semibold text-pink-400">UAS Pemrograman Web 2</span> &mdash;  
+        <span class="font-semibold text-indigo-300">[Nama Kamu]</span>
+      </div>
+      <a href="/" class="mt-10 inline-block bg-gradient-to-r from-purple-700 to-pink-600 text-white px-8 py-3 rounded-2xl font-bold shadow hover:from-pink-600 hover:to-purple-700 hover:scale-105 transition-all duration-150 uppercase tracking-wide text-base">
+        &larr; Kembali ke Home
+      </a>
+    </div>
+  </div>
+</section>
+<%- include('../partials/footer') %>

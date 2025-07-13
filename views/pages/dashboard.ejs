@@ -1,0 +1,158 @@
+<%- include('../partials/header') %>
+<section class="min-h-screen bg-[#101014] py-14 px-2 flex flex-col items-center">
+  <div class="relative max-w-6xl w-full bg-white/10 backdrop-blur-2xl rounded-3xl shadow-2xl border border-purple-900/30 p-12 mx-auto animate-glass-in">
+
+    <!-- Gradient Bubble Ornaments -->
+    <span class="absolute -top-16 -right-16 w-52 h-52 bg-gradient-to-tr from-pink-400/30 via-purple-700/20 to-indigo-500/30 rounded-full blur-3xl z-0"></span>
+    <span class="absolute -bottom-24 -left-24 w-40 h-40 bg-gradient-to-br from-indigo-500/40 via-purple-500/20 to-pink-400/40 rounded-full blur-2xl z-0"></span>
+
+    <!-- HEADER -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-12 relative z-10">
+      <div>
+        <h2 class="text-4xl font-extrabold text-purple-100 tracking-wide drop-shadow-lg uppercase mb-1 flex items-center gap-3">
+          <i class="fa fa-user-astronaut text-pink-400"></i>
+          Dashboard <span class="text-pink-400 text-2xl font-bold">| <%= user.name %></span>
+        </h2>
+        <div class="flex gap-3 items-center mt-2 text-purple-300/80">
+          <span class="bg-pink-700/30 text-pink-200 px-4 py-1 rounded-full text-xs font-bold flex items-center gap-1 select-none shadow">
+            <i class="fa fa-medal"></i> Member
+          </span>
+          <span class="text-xs bg-white/10 px-4 py-1 rounded-full border border-purple-200/30">Email: <%= user.email %></span>
+        </div>
+      </div>
+      <a href="/portfolio/add" class="inline-block bg-gradient-to-r from-purple-700 to-pink-600 text-white px-8 py-3 rounded-2xl shadow-xl hover:from-pink-600 hover:to-purple-700 hover:scale-105 transition-all duration-150 text-lg font-bold tracking-wide flex items-center gap-2">
+        <i class="fa fa-plus-circle"></i> Tambah Portfolio
+      </a>
+    </div>
+
+    <!-- MINI STATS PANEL -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-7 mb-12 relative z-10">
+      <div class="bg-white/10 backdrop-blur-lg rounded-2xl shadow border border-purple-900/30 p-5 text-center flex flex-col items-center">
+        <i class="fa fa-folder-open text-2xl text-pink-400 mb-2"></i>
+        <div class="text-xl text-purple-100 font-bold"><%= portfolios.length %></div>
+        <div class="text-purple-200 text-xs">Total Portfolio</div>
+      </div>
+      <div class="bg-white/10 backdrop-blur-lg rounded-2xl shadow border border-purple-900/30 p-5 text-center flex flex-col items-center">
+        <i class="fa fa-heart text-2xl text-pink-400 mb-2"></i>
+        <div class="text-xl text-purple-100 font-bold"><%= portfolios.reduce((acc,p)=>acc+(p.likes||0),0) %></div>
+        <div class="text-purple-200 text-xs">Total Likes</div>
+      </div>
+      <div class="bg-white/10 backdrop-blur-lg rounded-2xl shadow border border-purple-900/30 p-5 text-center flex flex-col items-center">
+        <i class="fa fa-comments text-2xl text-pink-400 mb-2"></i>
+        <div class="text-xl text-purple-100 font-bold">
+          <%= portfolios.reduce((acc,p)=>acc+(p.comments?p.comments.length:0),0) %>
+        </div>
+        <div class="text-purple-200 text-xs">Total Komentar</div>
+      </div>
+    </div>
+
+    <!-- FILTER KATEGORI/TAGS (opsional, simple UI) -->
+    <% 
+      let categories = Array.from(new Set(portfolios.map(p=>p.category))).filter(Boolean);
+      let allTags = Array.from(new Set([].concat(...portfolios.map(p=>p.tags||[])))).filter(Boolean);
+    %>
+    <div class="mb-10 flex flex-col sm:flex-row gap-3 sm:gap-8 justify-between items-center relative z-10">
+      <div class="flex gap-2 items-center flex-wrap">
+        <% categories.forEach(cat=>{ %>
+          <span class="portfolio-category cursor-pointer select-none hover:bg-pink-400 hover:text-white transition px-5 py-2">
+            <%= cat %>
+          </span>
+        <% }) %>
+      </div>
+      <div class="flex gap-2 items-center flex-wrap">
+        <% allTags.forEach(tag=>{ %>
+          <span class="bg-pink-300/20 text-pink-200 px-3 py-1 text-xs rounded-md font-semibold shadow-sm cursor-pointer hover:bg-pink-400 hover:text-white transition">#<%= tag %></span>
+        <% }) %>
+      </div>
+    </div>
+
+    <% if (typeof error_msg !== 'undefined' && error_msg) { %>
+      <div class="bg-red-400/20 border border-red-500/60 text-red-200 px-4 py-2 mb-5 rounded shadow animate-pulse text-center">
+        <%= error_msg %>
+      </div>
+    <% } %>
+    <% if (typeof success_msg !== 'undefined' && success_msg) { %>
+      <div class="bg-green-400/20 border border-green-500/60 text-green-200 px-4 py-2 mb-5 rounded shadow animate-bounce text-center">
+        <%= success_msg %>
+      </div>
+    <% } %>
+
+    <!-- PORTFOLIO LIST / EMPTY STATE -->
+    <% if (portfolios.length === 0) { %>
+      <div class="flex flex-col items-center py-20 text-center relative z-10">
+        <img src="https://cdn.dribbble.com/users/317817/screenshots/3830257/empty-state_2x.png" class="w-56 mx-auto mb-8 opacity-90 drop-shadow-lg empty-state-img" alt="Belum ada portfolio">
+        <p class="empty-state-title text-2xl font-bold text-purple-100 mb-2">Belum ada karya portfolio!</p>
+        <p class="empty-state-desc mb-4 text-purple-200">Yuk, mulai upload portfolio pertamamu dan bangun branding kreatif kamu di sini.</p>
+        <a href="/portfolio/add" class="bg-gradient-to-r from-pink-600 to-purple-700 text-white px-8 py-3 rounded-2xl shadow-xl hover:from-purple-700 hover:to-pink-600 hover:scale-105 transition-all duration-150 text-lg font-bold tracking-wide flex items-center gap-2 mt-3">
+          <i class="fa fa-plus"></i> Tambah Portfolio
+        </a>
+      </div>
+    <% } else { %>
+      <div class="grid md:grid-cols-2 gap-10 relative z-10">
+        <% portfolios.forEach(portfolio => { %>
+          <div class="bg-[#181824]/90 rounded-2xl shadow-xl border border-purple-900/20 hover:shadow-2xl hover:scale-[1.03] transition-all duration-200 group overflow-hidden relative animate-fade-in flex flex-col justify-between">
+            <div>
+              <div class="overflow-hidden rounded-t-2xl">
+                <img src="<%= portfolio.imageUrl %>" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" alt="<%= portfolio.title %>">
+              </div>
+              <div class="p-6 pb-4">
+                <h3 class="font-semibold text-2xl mb-2 text-purple-100 tracking-wider group-hover:text-pink-300 transition flex items-center gap-2">
+                  <i class="fa fa-gem text-pink-400"></i> <%= portfolio.title %>
+                </h3>
+                <div class="flex flex-wrap gap-2 mb-3">
+                  <span class="portfolio-category"><%= portfolio.category %></span>
+                  <% portfolio.tags.forEach(tag => { %>
+                    <span class="bg-pink-400/20 text-pink-200 px-3 py-1 text-xs rounded-md font-semibold">#<%= tag %></span>
+                  <% }) %>
+                </div>
+                <p class="text-gray-300 text-base line-clamp-2 mb-4"><%= portfolio.description.length > 100 ? portfolio.description.substring(0,100) + '...' : portfolio.description %></p>
+              </div>
+            </div>
+            <div class="p-6 pt-0 flex items-center gap-3 justify-between">
+              <div class="flex gap-3">
+                <a href="/portfolio/edit/<%= portfolio._id %>" class="bg-blue-600/80 text-white px-5 py-2 rounded-xl font-bold hover:bg-blue-800 hover:scale-105 transition-all flex items-center gap-2 shadow">
+                  <i class="fa fa-edit"></i> Edit
+                </a>
+                <form method="POST" action="/portfolio/delete/<%= portfolio._id %>?_method=DELETE" class="inline">
+                  <button type="submit" onclick="return confirm('Yakin ingin menghapus portfolio ini?')" class="bg-red-500/80 text-white px-5 py-2 rounded-xl font-bold hover:bg-red-700 hover:scale-105 transition-all ml-1 flex items-center gap-2 shadow">
+                    <i class="fa fa-trash"></i> Hapus
+                  </button>
+                </form>
+              </div>
+              <span class="bg-white/10 px-4 py-1 rounded-full shadow text-sm text-pink-200 font-bold flex items-center gap-2 select-none">
+                <i class="fa fa-heart text-pink-400"></i> <%= portfolio.likes || 0 %>
+              </span>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+</section>
+
+<style>
+@keyframes glass-in { from{opacity:0;transform:translateY(60px) scale(.97);} to{opacity:1;transform:translateY(0) scale(1);} }
+.animate-glass-in { animation: glass-in 0.9s cubic-bezier(.53,1.38,.38,.99); }
+@keyframes fade-in { from{opacity:0;} to{opacity:1;} }
+.animate-fade-in { animation: fade-in 1.2s cubic-bezier(.7,.1,.7,.99); }
+.portfolio-category {
+  color: #d72660;
+  background: #23233c;
+  display: inline-block;
+  padding: 3px 14px;
+  font-size: 0.87em;
+  border-radius: 14px;
+  font-weight: 500;
+  margin-right: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: background .14s,color .14s;
+}
+.portfolio-category:hover {
+  background: #d72660 !important;
+  color: #fff !important;
+}
+.empty-state-title { font-size:2rem;font-weight:700; }
+.empty-state-desc { font-size:1.1rem;opacity:.88 }
+</style>
+<%- include('../partials/footer') %>
