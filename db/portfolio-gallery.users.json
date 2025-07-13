@@ -1,0 +1,14 @@
+[{
+  "_id": {
+    "$oid": "687341bdaa46a9a6539af869"
+  },
+  "name": "noval",
+  "email": "novaladi@gmail.com",
+  "password": "$2b$10$QhAKrxvf2pdLBHwj3PeKl.E.eXFFUW8GuEl1UZzrPL/fsVrgZaq/G",
+  "avatar": "/uploads/default-avatar.png",
+  "role": "user",
+  "createdAt": {
+    "$date": "2025-07-13T05:18:53.266Z"
+  },
+  "__v": 0
+}]

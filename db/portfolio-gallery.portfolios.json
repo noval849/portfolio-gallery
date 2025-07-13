@@ -1,0 +1,25 @@
+[{
+  "_id": {
+    "$oid": "687346ba04b3306dfc98054f"
+  },
+  "userId": {
+    "$oid": "687341bdaa46a9a6539af869"
+  },
+  "title": "Landing Page Fashion Brand",
+  "description": "Landing page interaktif untuk promosi brand fashion, menampilkan slider produk, fitur “Add to Cart”, dan animasi smooth-scroll. Dibuat dengan Figma, ReactJS, dan TailwindCSS.",
+  "category": "UI Design",
+  "tags": [
+    "anding page",
+    "reactjs",
+    "fashion",
+    "ui",
+    "figma"
+  ],
+  "imageUrl": "/uploads/1752385210009-Desain Profil Perusahaan.jpg",
+  "likes": 0,
+  "comments": [],
+  "createdAt": {
+    "$date": "2025-07-13T05:40:10.018Z"
+  },
+  "__v": 0
+}]
